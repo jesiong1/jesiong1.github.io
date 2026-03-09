@@ -509,6 +509,44 @@
 
         /* ── Landscape mobile: restore desktop-like side-by-side layout ── */
         @media (max-width: 900px) and (orientation: landscape) {
+
+            /* ── Nav: use hamburger menu (8 links don't fit inline) ── */
+            .nav-toggle {
+                display: flex !important;
+            }
+
+            .nav-container {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .nav-links {
+                display: flex !important;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 65%;
+                max-width: 260px;
+                height: 100vh;
+                background: rgba(13, 13, 13, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+                transition: right 0.3s ease;
+                border-left: 1px solid var(--border);
+                z-index: 1002;
+                overflow-y: auto;
+            }
+
+            .nav-links.open {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+            }
+
+            /* ── Hero ── */
             .hero {
                 min-height: 100vh;
             }
