@@ -646,7 +646,18 @@
             display: grid;
             grid-template-columns: 3fr 2fr;
             gap: 4rem;
-            align-items: start;
+        }
+
+        /* Left column fills grid height so button can be centered below text */
+        .about-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .about-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .about-text p {
@@ -694,6 +705,8 @@
             display: flex;
             justify-content: center;
             max-width: 180px;
+            margin-top: auto;
+            margin-bottom: auto;
             margin-left: auto;
             margin-right: auto;
         }
