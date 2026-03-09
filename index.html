@@ -3457,13 +3457,9 @@
             });
         });
 
-        // Roadmap accordion — collapse all except Established and In Progress
+        // Roadmap accordion — collapse all by default
         document.querySelectorAll('.roadmap-block').forEach(block => {
-            if (!block.classList.contains('phase-established') && !block.classList.contains('phase-inprogress')) {
-                block.classList.add('collapsed');
-            } else {
-                block.classList.add('bars-active');
-            }
+            block.classList.add('collapsed');
         });
         document.querySelectorAll('.roadmap-phase-header').forEach(header => {
             header.addEventListener('click', () => {
