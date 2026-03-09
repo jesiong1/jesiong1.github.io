@@ -507,6 +507,98 @@
             }
         }
 
+        /* ── Landscape mobile: restore desktop-like side-by-side layout ── */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .hero {
+                min-height: 100vh;
+            }
+
+            /* Photo back to right side with left-fade, like desktop */
+            .hero-bg-photo {
+                inset: unset;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 52%;
+                height: 100%;
+                background-position: center top;
+                background-size: cover;
+                -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 18%, black 38%);
+                mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 18%, black 38%);
+                filter: brightness(0.88);
+                z-index: 0;
+            }
+
+            /* Restore subtle desktop gradient — no heavy bottom darkening */
+            .hero::before {
+                background: radial-gradient(
+                    ellipse 70% 80% at 68% 45%,
+                    rgba(60,60,65,0.35) 0%,
+                    transparent 70%
+                ) !important;
+                z-index: 1;
+            }
+
+            /* Text on left, vertically centered */
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                width: 52%;
+                max-width: unset;
+                margin: 0;
+                padding: 0 1.5rem 0 6%;
+                min-height: 100vh;
+                height: auto;
+                justify-content: center;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .hero-tagline { display: none !important; }
+
+            .hero-text-top {
+                padding: 0;
+                max-width: 100%;
+                animation: none !important;
+                opacity: 1 !important;
+            }
+
+            .hero-text-bottom {
+                position: static;
+                padding: 0;
+                max-width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .hero-text-top h1 {
+                font-size: 2rem;
+                white-space: nowrap;
+                margin-bottom: 0;
+            }
+
+            .hero-text-top .subtitle {
+                font-size: 0.65rem;
+                margin-top: 0.25rem;
+                margin-bottom: 0;
+            }
+
+            .hero-text-bottom .motto {
+                border-left: 2px solid rgba(201,162,39,0.4);
+                padding-left: 0.8rem;
+                max-width: none;
+                white-space: normal;
+                line-height: 1.55;
+                font-size: 0.82rem;
+                margin-top: 0;
+                text-align: left;
+                text-shadow: none;
+            }
+
+            .hero-text-bottom .motto .motto-author {
+                display: inline;
+            }
+        }
+
         /* About Section */
         #about {
             background: var(--bg-section);
