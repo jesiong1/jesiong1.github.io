@@ -3391,7 +3391,10 @@
             const scrollPos = window.scrollY + 120; // offset accounts for fixed nav + a bit
             let currentId = '';
             sections.forEach(section => {
-                if (section.offsetTop <= scrollPos) {
+                // getBoundingClientRect().top + scrollY gives true document position
+                // regardless of any positioned ancestors
+                const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+                if (sectionTop <= scrollPos) {
                     currentId = section.id;
                 }
             });
