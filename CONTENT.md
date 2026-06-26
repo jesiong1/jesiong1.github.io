@@ -173,7 +173,7 @@ I value friendship, collaboration and the scientific community and I am invested
 **1. Linking geometry and quantum theory via quantum reference frames**
 - Event: RQI Circuit Vienna 2026
 - Date: June 2026
-- Video: https://www.youtube.com/watch?v=gAh-DOPIScU&t=5160s
+- Video: https://www.youtube.com/watch?v=gAh-DOPIScU&t=5220s
 
 **2. Operational Quantum Frames: from quantum mechanics to quantum field theory and beyond**
 - Event: Quantum Reference Frames: A QISS Workshop, OIST
