@@ -32,26 +32,44 @@ def run(cmd):
     return subprocess.run(cmd, check=True, capture_output=True, text=True)
 
 
+# Injected into every post's preamble: shared helpers so posts stay DRY.
+#   \postlink{slug}{text}  ->  a link to /blog/<slug>/  (link to your other posts)
+PREAMBLE_INJECT = (
+    "\\usepackage{hyperref}\n"
+    "\\providecommand{\\postlink}[2]{\\href{/blog/#1/}{#2}}\n"
+)
+
+
 def tex_to_body(texpath):
     """Return (body_html, converter_name)."""
-    if shutil.which("latexmlc"):
-        out = texpath + ".html"
-        run(["latexmlc", texpath,
-             "--dest=" + out, "--format=html5",
-             "--noindex", "--nonumbersections", "--quiet"])
-        raw = open(out, encoding="utf-8").read()
-        os.remove(out)
-        return extract_latexml_body(raw), "latexml"
-    # local smoke-test fallback
-    r = run(["pandoc", texpath, "--mathjax", "-t", "html5"])
-    return r.stdout, "pandoc"
+    src = open(texpath, encoding="utf-8").read()
+    if "\\begin{document}" in src:
+        src = src.replace("\\begin{document}", PREAMBLE_INJECT + "\\begin{document}", 1)
+    tmp = texpath + ".build.tex"
+    open(tmp, "w", encoding="utf-8").write(src)
+    try:
+        if shutil.which("latexmlc"):
+            out = tmp + ".html"
+            run(["latexmlc", tmp, "--dest=" + out, "--format=html5", "--quiet"])
+            raw = open(out, encoding="utf-8").read()
+            os.remove(out)
+            return extract_latexml_body(raw), "latexml"
+        # local smoke-test fallback
+        r = run(["pandoc", tmp, "--mathjax", "-t", "html5"])
+        return r.stdout, "pandoc"
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
 
 
 def extract_latexml_body(full_html):
-    """Pull just the article content out of LaTeXML's full HTML page."""
-    m = re.search(r'<div class="ltx_page_content">(.*)</div>\s*</div>\s*</body>',
-                  full_html, re.DOTALL)
-    body = m.group(1) if m else full_html
+    """Pull just the article content out of LaTeXML's full HTML page.
+    LaTeXML wraps the content in <article class="ltx_document">...; grabbing that
+    excludes the <head> tags, and CSS in the template hides the author/date block."""
+    m = re.search(r'<article class="ltx_document.*?</article>', full_html, re.DOTALL)
+    if not m:
+        m = re.search(r'<div class="ltx_document.*</div>\s*</body>', full_html, re.DOTALL)
+    body = m.group(0) if m else full_html
     # drop LaTeXML's own document title block (template supplies the H1)
     body = re.sub(r'<h1 class="ltx_title ltx_title_document">.*?</h1>', "", body, flags=re.DOTALL)
     return body
