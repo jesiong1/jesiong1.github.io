@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+
+% --- Preamble: the kind of setup you'd reuse across posts ---
+\usepackage{amsmath, amssymb, amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% Custom macros -- the real test of a converter
+\newcommand{\ev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Ham}{\mathcal{H}}
+
+\title{The Virial Theorem Is a Statement About Scaling}
+\author{Jan Glowacki}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The virial theorem is usually introduced as a time-averaging trick and then
+filed away. I want to argue that its natural home is the theory of scaling
+symmetries, where it becomes a one-line consequence of stationarity under
+dilations. Nothing here is new; I just think the scaling viewpoint deserves
+more airtime than it gets.
+\end{abstract}
+
+\section{The usual story}
+
+For a bounded system of particles with positions $\mathbf{r}_i$ and momenta
+$\mathbf{p}_i$, one defines the virial $G = \sum_i \mathbf{p}_i \cdot \mathbf{r}_i$
+and observes that its long-time average $\dot{G}$ vanishes. Writing
+$T$ for the kinetic energy, this yields the familiar
+\begin{equation}
+  2\,\ev{T} = -\, \Big\langle \sum_i \mathbf{F}_i \cdot \mathbf{r}_i \Big\rangle ,
+  \label{eq:virial}
+\end{equation}
+and for a potential $V \propto r^{n}$ one gets the clean relation
+$2\ev{T} = n\,\ev{V}$. This is correct, useful, and — I think — slightly
+misleading about \emph{why} it is true.
+
+\section{The scaling viewpoint}
+
+Consider instead the response of the action to a uniform rescaling of
+coordinates, $\mathbf{r}_i \mapsto \lambda\, \mathbf{r}_i$. Let the potential be
+homogeneous of degree $n$, so that $V(\lambda \mathbf{r}) = \lambda^{n} V(\mathbf{r})$.
+Then the kinetic and potential pieces of the Hamiltonian $\Ham = T + V$
+scale oppositely, and stationarity of the on-shell action under $\lambda$
+at $\lambda = 1$ is exactly Eq.~\eqref{eq:virial}.
+
+\begin{theorem}[Virial from dilation invariance]
+Let $V:\R^{3N}\to\R$ be homogeneous of degree $n$, and let the motion be
+bounded. Then the time-averaged energies satisfy
+\begin{equation}
+  2\,\ev{T} = n\,\ev{V}.
+  \label{eq:scaling}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Euler's identity for a degree-$n$ homogeneous function gives
+$\sum_i \mathbf{r}_i \cdot \grad_i V = n\,V$. Since $\mathbf{F}_i = -\grad_i V$,
+the right-hand side of Eq.~\eqref{eq:virial} equals $n\,\ev{V}$. The chain of
+equalities is short:
+\begin{align}
+  2\,\ev{T}
+    &= -\, \Big\langle \sum_i \mathbf{F}_i \cdot \mathbf{r}_i \Big\rangle \\
+    &= \Big\langle \sum_i \mathbf{r}_i \cdot \grad_i V \Big\rangle \\
+    &= n\,\ev{V},
+\end{align}
+where the last step is Euler's identity under the time average.
+\end{proof}
+
+\begin{remark}
+The point I care about: Eq.~\eqref{eq:scaling} did not require solving any
+equations of motion. It is a \emph{Ward identity} for the (broken) dilation
+symmetry, and the ``time average'' is doing the same job that the vacuum
+expectation value does in the field-theory version.
+\end{remark}
+
+\section{Why I think this deserves more airtime}
+
+Once you see the virial theorem as a scaling identity, three things that look
+like separate facts collapse into one. The Kepler relation $2\ev{T} = -\ev{V}$
+(here $n=-1$), the equipartition-flavored result for the harmonic trap
+($n = 2$, giving $\ev{T} = \ev{V}$), and the tracelessness conditions that show
+up in conformal field theory are all the same statement evaluated at different
+homogeneity degrees. That unification is, to me, worth more than the trick.
+
+\end{document}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — Jan Głowacki</title>
+<meta name="description" content="{{EXCERPT}}">
+<link rel="icon" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Jan Głowacki — Blog" href="/feed.xml">
+
+<!-- Site fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<!-- MathJax 3: renders both TeX (Pandoc) and MathML (LaTeXML); AMS numbering + your macros -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    displayMath: [['\\[', '\\]'], ['$$', '$$']],
+    tags: 'ams',
+    macros: { ev:['\\left\\langle #1 \\right\\rangle',1], dd:'\\mathrm{d}', R:'\\mathbb{R}', grad:'\\nabla', Ham:'\\mathcal{H}' }
+  },
+  options: { renderActions: { addMenu: [] } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+<style>
+:root{
+  --bg-dark:#1f1f1f; --bg-section:#262626; --bg-card:#2e2e2e;
+  --accent:#c9a227; --accent-soft:#d4b85a;
+  --text:#f5f5f5; --text-muted:#b0b0b0; --text-dim:#9a9a9a; --border:#444;
+  --font-sans:'Jost',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-serif:'Crimson Pro',Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--bg-dark); color:var(--text);
+  font-family:var(--font-serif); font-size:1.22rem; line-height:1.72; -webkit-font-smoothing:antialiased}
+
+.site-top{position:sticky; top:0; z-index:10; background:rgba(31,31,31,.92);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--border)}
+.site-top .inner{max-width:860px; margin:0 auto; padding:1rem 1.25rem;
+  display:flex; align-items:center; justify-content:space-between}
+.logo{font-family:var(--font-sans); font-weight:500; font-size:1.05rem; color:var(--text); text-decoration:none}
+.logo:hover{color:var(--accent)}
+.top-links a{font-family:var(--font-sans); font-size:.92rem; color:var(--text-muted); text-decoration:none; margin-left:1.4rem}
+.top-links a:hover{color:var(--accent)}
+
+article{max-width:720px; margin:0 auto; padding:3.5rem 1.25rem 6rem}
+.breadcrumb{font-family:var(--font-sans); font-size:.85rem; color:var(--text-dim); margin-bottom:1.5rem}
+.breadcrumb a{color:var(--text-muted); text-decoration:none}
+.breadcrumb a:hover{color:var(--accent)}
+h1{font-family:var(--font-sans); font-weight:600; font-size:2.15rem; line-height:1.18; letter-spacing:-.01em; margin:0 0 .55rem}
+.byline{font-family:var(--font-sans); color:var(--text-dim); font-size:.92rem;
+  border-bottom:1px solid var(--border); padding-bottom:1.4rem; margin-bottom:2rem}
+
+/* Body content — works for both our own classes and LaTeXML's ltx_* output */
+.post-body{}
+.post-body h2, .post-body .ltx_title_section{font-family:var(--font-sans); font-weight:600; font-size:1.4rem;
+  color:var(--text); margin:2.7rem 0 .8rem; letter-spacing:-.005em}
+.post-body h3, .post-body .ltx_title_subsection{font-family:var(--font-sans); font-weight:600; font-size:1.15rem; margin:2rem 0 .6rem}
+.post-body p, .post-body .ltx_p{margin:0 0 1.2rem}
+.post-body a{color:var(--accent-soft)}
+.post-body em, .post-body .ltx_emph{color:#fff; font-style:italic}
+
+/* Abstract (LaTeXML: .ltx_abstract) */
+.post-body .abstract, .post-body .ltx_abstract{
+  background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:8px; padding:1.1rem 1.4rem; font-size:1.05rem; color:var(--text-muted); margin:0 0 2.2rem}
+.post-body .ltx_abstract h6, .post-body .abstract .lab{font-family:var(--font-sans); font-size:.7rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600; margin:0 0 .45rem}
+
+/* Theorems / proofs (LaTeXML: .ltx_theorem, .ltx_proof) */
+.post-body .theorem, .post-body .ltx_theorem{
+  background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:8px; padding:1.05rem 1.4rem; margin:1.8rem 0}
+.post-body .ltx_theorem .ltx_title, .post-body .theorem .lab{
+  font-family:var(--font-sans); font-weight:600; color:var(--accent-soft)}
+.post-body .ltx_theorem .ltx_p, .post-body .theorem .body{font-style:italic; color:var(--text)}
+.post-body .proof, .post-body .ltx_proof{margin:1.4rem 0; color:var(--text-muted)}
+.post-body .ltx_proof .ltx_title{font-style:italic; color:var(--text-dim)}
+
+/* Equations */
+.post-body .ltx_equation, .post-body .ltx_eqn_table{margin:1.35rem 0; overflow-x:auto}
+.post-body .ltx_eqn_cell{text-align:left}
+mjx-container[display="true"]{margin:1.35rem 0 !important; overflow-x:auto; overflow-y:hidden}
+
+.post-nav{max-width:720px; margin:0 auto; padding:0 1.25rem 5rem}
+.post-nav a{font-family:var(--font-sans); font-size:.92rem; color:var(--text-muted); text-decoration:none}
+.post-nav a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header class="site-top">
+  <div class="inner">
+    <a class="logo" href="/">Jan Głowacki</a>
+    <nav class="top-links">
+      <a href="/">Home</a>
+      <a href="/#blog">Blog</a>
+    </nav>
+  </div>
+</header>
+
+<article>
+  <div class="breadcrumb"><a href="/#blog">Blog</a> / {{TITLE}}</div>
+  <h1>{{TITLE}}</h1>
+  <div class="byline">Jan Głowacki · {{DATE_HUMAN}}</div>
+  <div class="post-body">
+{{BODY}}
+  </div>
+</article>
+
+<nav class="post-nav">
+  <a href="/#blog">← Back to all posts</a>
+</nav>
+
+</body>
+</html>
