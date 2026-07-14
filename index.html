@@ -2035,7 +2035,6 @@
                 <li><a href="#community">Community</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#talks">Talks</a></li>
-                <li><a href="#blog">Blog</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -3320,23 +3319,15 @@
     </section>
 
     <!-- Contact Section -->
-    <!-- Blog Section -->
-    <section id="blog">
-        <div class="section-container">
-            <h2 class="section-title">Blog</h2>
-            <div class="talks-list">
-                <!-- BLOG:START -->
-                <!-- BLOG:END -->
-            </div>
-        </div>
-    </section>
-
     <section id="contact">
         <div class="section-container">
             <h2 class="section-title">Contact</h2>
             <div class="contact-grid">
                 <div class="contact-info fade-in">
-                    <p><strong>Email:</strong> <a href="mailto:jan.glowacki@oeaw.ac.at">jan.glowacki@oeaw.ac.at</a></p>
+                    <p><strong>Email:</strong>
+                        <a href="#" id="email-link" class="email-reveal"
+                           data-u="jan.glowacki" data-d="oeaw.ac.at"
+                           role="button" aria-label="Reveal email address">Click to reveal</a></p>
                     <p><strong>Address:</strong><br>
                     IQOQI Vienna<br>
                     Austrian Academy of Sciences<br>
@@ -3662,6 +3653,35 @@
         @media (max-width: 600px) {
             #scroll-top-btn { bottom: 1.25rem; right: 1.25rem; }
         }
+
+        /* Email reveal button — address is assembled by JS on click */
+        .email-reveal {
+            display: inline-block;
+            cursor: pointer;
+            color: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.05rem 0.6rem;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .email-reveal:hover {
+            color: var(--bg-dark);
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .email-reveal.revealed {
+            border-color: transparent;
+            padding: 0;
+            background: transparent;
+            color: var(--accent);
+        }
+        .email-reveal.revealed:hover {
+            color: var(--accent-soft);
+            background: transparent;
+            text-decoration: underline;
+        }
     </style>
 
     <script>
@@ -3691,6 +3711,27 @@
 
             btn.addEventListener('click', function () {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        })();
+    </script>
+
+    <script>
+        /* Email obfuscation: the address is split across data attributes and
+           assembled only on click, so the full address (and the "@") never
+           appear in the page source that spam harvesters scrape. */
+        (function () {
+            var link = document.getElementById('email-link');
+            if (!link) return;
+            var revealed = false;
+            link.addEventListener('click', function (e) {
+                if (revealed) return;            /* once revealed, follow the mailto */
+                e.preventDefault();
+                var addr = link.dataset.u + '@' + link.dataset.d;
+                link.textContent = addr;
+                link.setAttribute('href', 'mailto:' + addr);
+                link.setAttribute('aria-label', 'Email ' + addr);
+                link.classList.add('revealed');
+                revealed = true;
             });
         })();
     </script>
